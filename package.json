@@ -1,0 +1,47 @@
+{
+  "name": "bowrd-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server for Bowrd - Self-hosted visual bookmarking and Pinterest alternative",
+  "main": "dist/index.js",
+  "bin": {
+    "bowrd-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "bowrd",
+    "bookmarking",
+    "pinterest",
+    "ai-agent",
+    "claude",
+    "cursor"
+  ],
+  "author": "Robert Schulze Dieckhoff",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Robert-SD/bowrd-mcp.git"
+  },
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "dotenv": "^18.0.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
