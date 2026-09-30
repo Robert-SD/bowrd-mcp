@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bowrd": {
+      "command": "npx",
+      "args": ["-y", "bowrd-mcp"]
+    }
+  }
+}

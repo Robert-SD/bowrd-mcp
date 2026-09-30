@@ -60,8 +60,8 @@ Add this to your Claude Desktop configuration (`~/Library/Application Support/Cl
 {
   "mcpServers": {
     "bowrd": {
-      "command": "node",
-      "args": ["/path/to/bowrd-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "bowrd-mcp"],
       "env": {
         "BOWRD_URL": "https://your-bowrd-domain.com",
         "BOWRD_API_TOKEN": "your_generated_mcp_token"
@@ -70,6 +70,7 @@ Add this to your Claude Desktop configuration (`~/Library/Application Support/Cl
   }
 }
 ```
+*(If running from local source clone, replace `"command": "npx", "args": ["-y", "bowrd-mcp"]` with `"command": "node", "args": ["/path/to/bowrd-mcp/dist/index.js"]`)*
 
 ### Cursor
 Add to `.cursor/mcp.json` in your workspace or global settings:
@@ -78,8 +79,8 @@ Add to `.cursor/mcp.json` in your workspace or global settings:
 {
   "mcpServers": {
     "bowrd": {
-      "command": "node",
-      "args": ["/path/to/bowrd-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "bowrd-mcp"],
       "env": {
         "BOWRD_URL": "https://your-bowrd-domain.com",
         "BOWRD_API_TOKEN": "your_generated_mcp_token"
@@ -88,6 +89,17 @@ Add to `.cursor/mcp.json` in your workspace or global settings:
   }
 }
 ```
+
+### Google Antigravity (`agy`)
+Install directly via the Antigravity plugin manager:
+```bash
+agy plugin install https://github.com/Robert-SD/bowrd-mcp
+```
+Make sure `BOWRD_URL` and `BOWRD_API_TOKEN` are set in your environment.
+
+### Safety & Guardrails
+- **Non-Destructive Operations**: To protect your visual library from unintended AI hallucination or accidental mass deletion, Bowrd MCP deliberately exposes strictly additive, reading, and searching tools. Deletions cannot be performed via MCP.
+
 
 ---
 

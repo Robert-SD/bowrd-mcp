@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.robert-sd/bowrd-mcp",
+  "title": "Bowrd MCP Server",
+  "description": "Model Context Protocol (MCP) server for Bowrd — self-hosted visual bookmarking and Pinterest alternative with ActivityPub support.",
+  "repository": {
+    "url": "https://github.com/Robert-SD/bowrd-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "bowrd-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "BOWRD_URL",
+          "description": "The base URL of your self-hosted Bowrd instance (e.g. https://bowrd.example.com)",
+          "isRequired": true,
+          "isSecret": false
+        },
+        {
+          "name": "BOWRD_API_TOKEN",
+          "description": "Bearer token configured in Bowrd .env (MCP_API_TOKEN)",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

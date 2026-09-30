@@ -1,0 +1,13 @@
+{
+  "name": "bowrd",
+  "version": "1.0.0",
+  "description": "Visual bookmarking and inspiration board management for Bowrd",
+  "author": {
+    "name": "Robert Schulze Dieckhoff",
+    "url": "https://github.com/Robert-SD"
+  },
+  "homepage": "https://github.com/Robert-SD/bowrd-mcp",
+  "repository": "https://github.com/Robert-SD/bowrd-mcp",
+  "license": "MIT",
+  "skills": ["skills/bowrd-bookmarks/SKILL.md"]
+}
