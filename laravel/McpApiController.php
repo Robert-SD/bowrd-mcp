@@ -96,6 +96,22 @@ class McpApiController extends Controller
     }
 
     /**
+     * Get a single entry by ID or UUID.
+     */
+    public function entry(Request $request, $id): JsonResponse
+    {
+        $user = $this->getAuthUser($request);
+        $entry = Entry::where('user_id', $user->id)
+            ->where(function ($q) use ($id) {
+                $q->where('id', $id)->orWhere('uuid', $id);
+            })
+            ->with(['images', 'boards:id,name,slug', 'tags:id,name'])
+            ->firstOrFail();
+
+        return response()->json($entry);
+    }
+
+    /**
      * Create a new pin/entry and dispatch background image download.
      */
     public function createEntry(Request $request): JsonResponse
@@ -160,6 +176,62 @@ class McpApiController extends Controller
         }
 
         return response()->json($entry->load(['images', 'boards:id,name,slug', 'tags:id,name']), 201);
+    }
+
+    /**
+     * Update an existing entry (title, description, tags, move board, or visibility).
+     */
+    public function updateEntry(Request $request, $id): JsonResponse
+    {
+        $user = $this->getAuthUser($request);
+        $entry = Entry::where('user_id', $user->id)
+            ->where(function ($q) use ($id) {
+                $q->where('id', $id)->orWhere('uuid', $id);
+            })
+            ->firstOrFail();
+
+        $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string|max:5000',
+            'board_id' => 'nullable|exists:boards,id',
+            'is_public' => 'boolean',
+            'content_warning' => 'nullable|string|max:200',
+            'tags' => 'nullable|array',
+        ]);
+
+        if ($request->has('title')) {
+            $entry->title = $request->input('title');
+        }
+        if ($request->has('description')) {
+            $entry->description = $request->input('description');
+        }
+        if ($request->has('is_public')) {
+            $entry->is_public = $request->boolean('is_public');
+        }
+        if ($request->has('content_warning')) {
+            $entry->content_warning = $request->input('content_warning');
+        }
+        $entry->save();
+
+        if ($request->has('board_id') && $boardId = $request->input('board_id')) {
+            $board = Board::where('id', $boardId)->where('user_id', $user->id)->firstOrFail();
+            $entry->boards()->wherePivot('user_id', $user->id)->detach();
+            $entry->boards()->attach($board->id, [
+                'user_id' => $user->id,
+                'created_at' => now(),
+            ]);
+        }
+
+        if ($request->has('tags')) {
+            $tagIds = [];
+            foreach ($request->input('tags') as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => Str::slug($tagName)]);
+                $tagIds[] = $tag->id;
+            }
+            $entry->tags()->sync($tagIds);
+        }
+
+        return response()->json($entry->load(['images', 'boards:id,name,slug', 'tags:id,name']));
     }
 
     /**

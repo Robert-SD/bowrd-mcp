@@ -1,4 +1,4 @@
-import type { Board, Entry, ScrapedPage } from "./types.js";
+import type { Board, Entry, ScrapedPage, UpdateEntryParams } from "./types.js";
 
 export class BowrdClient {
   private baseUrl: string;
@@ -63,6 +63,24 @@ export class BowrdClient {
     params.append("limit", limit.toString());
 
     return this.request<Entry[]>(`/api/mcp/entries?${params.toString()}`);
+  }
+
+  async getEntry(id: number | string): Promise<Entry> {
+    return this.request<Entry>(`/api/mcp/entries/${id}`);
+  }
+
+  async updateEntry(id: number | string, params: UpdateEntryParams): Promise<Entry> {
+    return this.request<Entry>(`/api/mcp/entries/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        title: params.title,
+        description: params.description,
+        board_id: params.boardId,
+        is_public: params.isPublic,
+        content_warning: params.contentWarning,
+        tags: params.tags,
+      }),
+    });
   }
 
   async createEntry(params: {

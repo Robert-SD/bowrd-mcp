@@ -12,7 +12,9 @@ Use the Bowrd MCP tools to manage boards and pins in the user's self-hosted Bowr
 - `bowrd_list_boards`: List all boards with pin counts, descriptions, and slugs.
 - `bowrd_create_board`: Create a new board (name, optional description, public/private).
 - `bowrd_list_entries`: Browse pins, optionally filtered by `board_id`.
+- `bowrd_get_entry`: Retrieve detailed information for a single pin by its ID or UUID.
 - `bowrd_create_entry`: Pin an image to a board with title, image URL, source URL, description, and tags.
+- `bowrd_update_entry`: Update an existing pin (edit title, description, tags, move board, or visibility).
 - `bowrd_search_entries`: Search pins by keyword across title, notes, or source URL.
 - `bowrd_scrape_images_from_url`: Extract high-resolution images and metadata from any webpage.
 

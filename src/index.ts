@@ -141,6 +141,79 @@ server.tool(
   }
 );
 
+// Tool: Get single entry
+server.tool(
+  "bowrd_get_entry",
+  "Retrieve detailed information about a single pin/entry by its ID or UUID.",
+  {
+    entry_id: z.union([z.number(), z.string()]).describe("The numerical ID or UUID string of the entry"),
+  },
+  async ({ entry_id }) => {
+    try {
+      const entry = await client.getEntry(entry_id);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(entry, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        content: [{ type: "text", text: `Error fetching entry: ${error.message}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+// Tool: Update entry
+server.tool(
+  "bowrd_update_entry",
+  "Update an existing pin/entry (edit title, description, content warning, tags, change visibility, or move to another board).",
+  {
+    entry_id: z.union([z.number(), z.string()]).describe("The numerical ID or UUID string of the entry to update"),
+    title: z.string().optional().describe("New title for the entry"),
+    description: z.string().optional().describe("New description or notes for the entry"),
+    board_id: z.number().optional().describe("ID of the board to move this entry to"),
+    is_public: z.boolean().optional().describe("Whether the entry is publicly visible"),
+    content_warning: z.string().optional().describe("Optional content warning / spoiler tag"),
+    tags: z.array(z.string()).optional().describe("Replacement list of tags (e.g. ['fashion', 'autumn'])"),
+  },
+  async ({ entry_id, title, description, board_id, is_public, content_warning, tags }) => {
+    try {
+      const entry = await client.updateEntry(entry_id, {
+        title,
+        description,
+        boardId: board_id,
+        isPublic: is_public,
+        contentWarning: content_warning,
+        tags,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Successfully updated entry "${entry.title}" (ID: ${entry.id}, UUID: ${entry.uuid})!`,
+          },
+          {
+            type: "text",
+            text: JSON.stringify(entry, null, 2),
+          },
+        ],
+      };
+    } catch (error: any) {
+      return {
+        content: [{ type: "text", text: `Error updating entry: ${error.message}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+
 // Tool: Search entries
 server.tool(
   "bowrd_search_entries",

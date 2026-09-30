@@ -16,9 +16,12 @@ This server enables AI assistants (Claude Desktop, Cursor, Antigravity, OpenClaw
 | `bowrd_list_boards` | List all boards with IDs, names, slugs, descriptions, and pin counts. | None |
 | `bowrd_create_board` | Create a new board. | `name` (required), `description` (optional), `is_public` (default: `true`) |
 | `bowrd_list_entries` | List pins/entries from Bowrd, optionally filtered by board. | `board_id` (optional), `limit` (1-50, default: `20`) |
+| `bowrd_get_entry` | Retrieve full details of a single pin by ID or UUID. | `entry_id` (required) |
 | `bowrd_create_entry` | Pin an image to a board. Bowrd automatically downloads and stores the media. | `board_id` (required), `title` (required), `image_url` (required), `source_url` (optional), `description` (optional), `tags` (optional array), `is_public` (default: `true`) |
+| `bowrd_update_entry` | Update an existing pin (edit title, description, content warning, tags, move board, or visibility). | `entry_id` (required), `title` (optional), `description` (optional), `board_id` (optional), `tags` (optional array), `is_public` (optional), `content_warning` (optional) |
 | `bowrd_search_entries` | Search through your pins by keyword in title, description, or source URL. | `query` (required), `limit` (default: `20`) |
 | `bowrd_scrape_images_from_url` | Scrape a webpage to find images, title, and description using Bowrd's image finder. | `url` (required) |
+
 
 ---
 
@@ -122,10 +125,14 @@ Route::prefix('api/mcp')->group(function () {
     Route::get('/boards', [McpApiController::class, 'boards']);
     Route::post('/boards', [McpApiController::class, 'createBoard']);
     Route::get('/entries', [McpApiController::class, 'entries']);
+    Route::get('/entries/{id}', [McpApiController::class, 'entry']);
     Route::post('/entries', [McpApiController::class, 'createEntry']);
+    Route::put('/entries/{id}', [McpApiController::class, 'updateEntry']);
+    Route::patch('/entries/{id}', [McpApiController::class, 'updateEntry']);
     Route::get('/search', [McpApiController::class, 'search']);
     Route::post('/fetch-images', [McpApiController::class, 'fetchImages']);
 });
+
 ```
 
 ### Step 3: Exclude from CSRF Protection

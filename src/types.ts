@@ -39,3 +39,13 @@ export interface ScrapedPage {
   description: string;
   error?: string | null;
 }
+
+export interface UpdateEntryParams {
+  title?: string;
+  description?: string;
+  boardId?: number;
+  isPublic?: boolean;
+  contentWarning?: string;
+  tags?: string[];
+}
+
