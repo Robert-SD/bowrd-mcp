@@ -28,7 +28,7 @@ This server enables AI assistants (Claude Desktop, Cursor, Antigravity, OpenClaw
 ## Quickstart
 
 ### 1. Prerequisites
-- Node.js `>= 18`
+- Node.js `>= 20`
 - A running self-hosted [Bowrd](https://bowrd.eu/) instance with the API bridge enabled (see [Bowrd Backend Setup](#bowrd-backend-setup) below).
 
 ### 2. Installation & Build
