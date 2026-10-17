@@ -1,7 +1,7 @@
 # Bowrd MCP Server
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![MCP](https://img.shields.io/badge/MCP-1.0.0-green.svg)](https://modelcontextprotocol.io/)
+[![MCP](https://img.shields.io/badge/MCP-1.2.0-green.svg)](https://modelcontextprotocol.io/)
 
 A Model Context Protocol (MCP) server for [Bowrd](https://bowrd.eu/) — the minimalist, self-hosted visual bookmarking platform and Pinterest alternative with ActivityPub / Fediverse integration.
 

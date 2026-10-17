@@ -14,7 +14,7 @@ const client = new BowrdClient();
 // Initialize the MCP Server
 const server = new McpServer({
   name: "bowrd-mcp",
-  version: "1.0.0",
+  version: "1.2.0",
 });
 
 // Tool: List boards
